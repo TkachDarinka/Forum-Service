@@ -13,7 +13,6 @@ import java.util.Set;
 @Document(collection = "user")
 @Getter
 @EqualsAndHashCode(of = {"login"})
-@NoArgsConstructor
 public class User {
     @Indexed(unique = true)  // проверка на уникальный индекс
     String login;
@@ -23,15 +22,28 @@ public class User {
     String firstName;
     @Setter
     String lastName;
-    @Setter
-    Set<String> roles = new HashSet<String>();
+    Set<Role> roles;
+
+    public User() {
+        roles = new HashSet<>();
+        roles.add(Role.USER);
+    }
 
     public User(String login, String password, String firstName, String lastName) {
+        this();
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
 
+    }
+
+    public boolean addRole(String role) {
+        return roles.add(Role.valueOf(role.toUpperCase()));
+    }
+
+    public boolean removeRole(String role) {
+        return roles.remove(Role.valueOf(role.toUpperCase()));
     }
 
 }

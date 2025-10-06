@@ -10,7 +10,6 @@ import java.util.Set;
 @Builder //для удобного и читаемого создания объектов
 public class UserDto {
     String login;
-    String password;
     String firstName;
     String lastName;
     @Singular //позволяет добавлять по одному элементу в билдере (например, .tag("admin").tag("moder").tag("user")), а не всю коллекцию целиком
