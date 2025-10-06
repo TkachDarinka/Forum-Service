@@ -14,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -103,6 +102,14 @@ public class PostServiceImpl implements PostService {
                                 .findAllByDateCreatedBetween(
                                         datePeriodDto.getDateFrom(),
                                         datePeriodDto.getDateTo()).spliterator(),
+                        false)
+                .map(post -> modelMapper.map(post, PostDto.class)).toList();
+    }
+
+    @Override
+    public Iterable<PostDto> getPostsByTitle(String title) {
+        return StreamSupport
+                .stream(postRepository.findAllByTitleIgnoreCase(title).spliterator(),
                         false)
                 .map(post -> modelMapper.map(post, PostDto.class)).toList();
     }
