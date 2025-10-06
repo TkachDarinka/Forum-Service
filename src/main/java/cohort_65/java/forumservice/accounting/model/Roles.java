@@ -1,4 +1,5 @@
 package cohort_65.java.forumservice.accounting.model;
 
-public class Roles {
+public enum Roles {
+    USER, MODER, ADMIN;
 }

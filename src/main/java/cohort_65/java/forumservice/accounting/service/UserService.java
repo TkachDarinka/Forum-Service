@@ -13,7 +13,5 @@ public interface UserService {
 
     UserDto updateUserByLogin(NewUserDto newUserDto, String login);
 
-    UserDto addRoleByLogin(String login, String role);
-
-    UserDto removeRoleByLogin(String login, String role);
+    UserDto changeRoleForUser(String login, String role, boolean isAddRole);
 }

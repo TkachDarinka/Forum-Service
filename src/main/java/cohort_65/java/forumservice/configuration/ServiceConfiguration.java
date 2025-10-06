@@ -2,9 +2,10 @@ package cohort_65.java.forumservice.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ServiceConfiguration {
@@ -23,4 +24,9 @@ public class ServiceConfiguration {
     ModelMapper будет строго и корректно сопоставлять поля, включая приватные,
     что облегчает преобразование данных между слоями приложения (например, из Entity в DTO и обратно)
      */
+
+    @Bean
+    PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

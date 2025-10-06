@@ -6,6 +6,8 @@ import cohort_65.java.forumservice.accounting.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/account")
 @RequiredArgsConstructor
@@ -34,13 +36,20 @@ public class UserController {
         return userService.updateUserByLogin(newUserDto, login);
     }
 
-    @PutMapping("user/{login}/role/{role}")
-    public UserDto addRole(@PathVariable String login, @PathVariable String role, @RequestBody UserDto userDto) {
-        return userService.addRoleByLogin(login, role);
+    @PutMapping("/user/{login}/role/{role}")
+    public UserDto addRoleForUser(@PathVariable String login,
+                                  @PathVariable String role) {
+        return userService.changeRoleForUser(login, role,true);
     }
 
-    @DeleteMapping("user/{login}/role/{role}")
-    public UserDto removeRole(@PathVariable String login, @PathVariable String role) { //@PathVariable принимает два параметра пути через два @PathVariable
-        return userService.removeRoleByLogin(login, role); //вызывается сервис для добавления роли и возвращается DTO
+    @DeleteMapping("/user/{login}/role/{role}")
+    public UserDto removeRoleForUser(@PathVariable String login,
+                                     @PathVariable String role) {
+        return userService.changeRoleForUser(login, role,false);
+    }
+
+    @PostMapping("/login")
+    public UserDto login(Principal principal) {
+        return userService.getUserByLogin(principal.getName());
     }
 }
